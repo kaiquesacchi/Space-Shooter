@@ -6,11 +6,22 @@ public class PlayerController : MonoBehaviour
 {
     public float speed, tilt;
     public float xMin, xMax;
+    public GameObject explosion;
 
     Rigidbody rigidBody;
+    GameController gameController;
 
     void Start()
     {
+        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
+        if (gameControllerObject != null)
+        {
+            gameController = gameControllerObject.GetComponent<GameController>();
+        }
+        else
+        {
+            Debug.Log("Cannot find `GameController` script.");
+        }
         rigidBody = GetComponent<Rigidbody>();
         speed = PlayerPrefs.GetFloat("playerSpeed", speed);
     }
@@ -24,5 +35,17 @@ public class PlayerController : MonoBehaviour
             0.0f
         );
         rigidBody.rotation = Quaternion.Euler(0.0f, 0.0f, rigidBody.velocity.x * -tilt);
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Boundary") return;
+        Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(other.gameObject);
+        Destroy(gameObject);
+        if (other.tag == "Hazard")
+        {
+            gameController.GameOver();
+        }
+
     }
 }

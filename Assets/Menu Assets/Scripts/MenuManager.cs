@@ -12,6 +12,8 @@ public class MenuManager : MonoBehaviour
     public Slider spawnWaitSlider;
     public Slider playerSpeedSlider;
 
+    public InputField email, password;
+
     void Start()
     {
         mainVolumeSlider.value = PlayerPrefs.GetFloat("mainVolume", 1f);
@@ -46,5 +48,9 @@ public class MenuManager : MonoBehaviour
     public void SetPlayerSpeed(Slider playerSpeedSlider)
     {
         PlayerPrefs.SetFloat("playerSpeed", playerSpeedSlider.value);
+    }
+
+    public void DoLogin()
+    {
     }
 }
