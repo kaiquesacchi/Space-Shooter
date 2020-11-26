@@ -11,12 +11,18 @@ public class GameController : MonoBehaviour
     public Vector3 spawnValues;
     public float startWait, spawnWait;
     public Text scoreText;
+    
     int score;
     bool isAlive;
-    void Start()
+    AudioSource audioSource;
+
+    void Start()    
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = PlayerPrefs.GetFloat("mainVolume", 0.5f);
         isAlive = true;
         StartCoroutine(SpawnWaves());
+        spawnWait = PlayerPrefs.GetFloat("spawnWait", spawnWait);
     }
     IEnumerator SpawnWaves()
     {

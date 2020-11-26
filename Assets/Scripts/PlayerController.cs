@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        speed = PlayerPrefs.GetFloat("playerSpeed", speed);
     }
     void FixedUpdate()
     {
