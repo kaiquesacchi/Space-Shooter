@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         isAlive = true;
-       StartCoroutine(SpawnWaves());
+        StartCoroutine(SpawnWaves());
     }
     IEnumerator SpawnWaves()
     {
@@ -46,5 +47,12 @@ public class GameController : MonoBehaviour
     public void GameOver()
     {
         isAlive = false;
+        StartCoroutine(OpenMenu());
+    }
+
+    IEnumerator OpenMenu()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("Menu 3D", LoadSceneMode.Single);
     }
 }
