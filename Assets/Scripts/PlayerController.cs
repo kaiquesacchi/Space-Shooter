@@ -39,11 +39,11 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Boundary") return;
-        Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(other.gameObject);
-        Destroy(gameObject);
         if (other.tag == "Hazard")
         {
+            Instantiate(explosion, transform.position, transform.rotation);
+            Destroy(other.gameObject);
+            Destroy(gameObject);
             gameController.GameOver();
         }
 

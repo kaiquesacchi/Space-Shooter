@@ -20,7 +20,8 @@ public class MenuManager : MonoBehaviour
         effectsVolumeSlider.value = PlayerPrefs.GetFloat("effectsVolume", 1f);
         spawnWaitSlider.value = PlayerPrefs.GetFloat("spawnWait", 1.5f);
         playerSpeedSlider.value = PlayerPrefs.GetFloat("playerSpeed", 8f);
-
+        email.text = PlayerPrefs.GetString("loginEmail", "");
+        password.text = PlayerPrefs.GetString("loginPassword", "");
     }
 
 
@@ -52,5 +53,7 @@ public class MenuManager : MonoBehaviour
 
     public void DoLogin()
     {
+        PlayerPrefs.SetString("loginEmail", email.text);
+        PlayerPrefs.SetString("loginPassword", password.text);
     }
 }
