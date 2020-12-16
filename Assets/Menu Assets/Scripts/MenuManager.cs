@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+using UnityEngine.Android;
+
 
 public class MenuManager : MonoBehaviour
 {
@@ -16,6 +18,13 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        #if PLATFORM_ANDROID
+            if (!Permission.HasUserAuthorizedPermission(Permission.Camera))
+            {
+                Permission.RequestUserPermission(Permission.Camera);
+            }
+        #endif
+
         mainVolumeSlider.value = PlayerPrefs.GetFloat("mainVolume", 1f);
         effectsVolumeSlider.value = PlayerPrefs.GetFloat("effectsVolume", 1f);
         spawnWaitSlider.value = PlayerPrefs.GetFloat("spawnWait", 1.5f);

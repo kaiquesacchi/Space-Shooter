@@ -1,0 +1,28 @@
+﻿using UnityEngine.Networking;
+using System.Security.Cryptography.X509Certificates;
+using UnityEngine;
+
+internal class RequestCertificate : CertificateHandler
+{
+
+    private static string PUB_KEY = "3082010A0282010100DD7909DB3A84DA8CBF0EBC5D188F42E325589A9F5CD8A3F9899943AECB29CAB075C3F6F83131B2F5C118694FECA13522D16706012E388988042C6E789CF26C918AC582D9E663D591D08F2B9198666C66E8D450DA331B10A49F7F38747A203ED665FD14F60C5FA325040ECE4AC0FB78A88585B34890A418C3C73906FD9C9773EB1242F10DE27AD52F237A74736A69366655A8AC1CB2F5B7EC07D346A583BCBBEDFDE7C911D8DADBEC05D3C8C2DDD126986960A420EF9E04491F4C0A377A7576A40CFA40D7283390748C4C3D4E04169F830791F63D09D319688332FF8D6FE6782C5938FADE785C686D7F7C6D949B988246EE533EABA290E1079EC36CEDD00EEDCB0203010001";
+
+
+    protected override bool ValidateCertificate(byte[] certificateData)
+    {
+        X509Certificate2 certificate = new X509Certificate2(certificateData);
+        string pk = certificate.GetPublicKeyString();
+        if (pk.Equals(PUB_KEY))
+        {
+            Debug.Log("Validate Certificate");
+
+            return true;
+        }
+        else
+        {
+            Debug.Log("Not Validate Certificate");
+
+            return false;
+        }
+    }
+}

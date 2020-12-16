@@ -24,11 +24,11 @@ public class PlayerController : MonoBehaviour
         }
         rigidBody = GetComponent<Rigidbody>();
         speed = PlayerPrefs.GetFloat("playerSpeed", speed);
+
+        EventsManager.instance.MoveHandTrigger += HandMovementDetected;
     }
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Vertical");
-        rigidBody.velocity = new Vector3(-speed * moveHorizontal, 0.0f, 0.0f);
         rigidBody.position = new Vector3(
             Mathf.Clamp(rigidBody.position.x, xMin, xMax),
             0.0f,
@@ -42,10 +42,16 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Hazard")
         {
             Instantiate(explosion, transform.position, transform.rotation);
+            EventsManager.instance.MoveHandTrigger -= HandMovementDetected;
             Destroy(other.gameObject);
             Destroy(gameObject);
             gameController.GameOver();
         }
 
+    }
+    void HandMovementDetected(int id, bool isOpenHand)
+    {
+        float moveHorizontal = isOpenHand ? -1f : 1f;
+        rigidBody.velocity = new Vector3(speed * moveHorizontal, 0.0f, 0.0f);
     }
 }
